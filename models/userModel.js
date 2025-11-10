@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema(
         profile: {
             type: String,
             default: "https://www.google.com/url?sa=i&url=https%3A%2F%2Fdepositphotos.com%2Fvectors%2Fprofile-placeholder.html&psig=AOvVaw1mzRnuTyxiIePW8rw4Y6-A&ust=1762863894242000&source=images&cd=vfe&opi=89978449&ved=0CBUQjRxqFwoTCKiEwfvJ55ADFQAAAAAdAAAAABAK"
+        },
+        answer: {
+            type: String,
+            required: [true, "Answer is required"]
         }
     },{timestamps: true}
 );

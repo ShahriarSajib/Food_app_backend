@@ -11,10 +11,11 @@ const registerController = async (req, res) => {
             password, 
             phone,
             address, 
-            userType
+            userType,
+            answer
         } = req.body;
         //validation
-        if(!name || !email || !password || !phone || !address || !userType){
+        if(!name || !email || !password || !phone || !address || !userType || !answer){
             return res.status(500).send({
                 success: false,
                 message: "Please fill all required fields"

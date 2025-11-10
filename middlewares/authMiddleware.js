@@ -4,8 +4,8 @@ const authMiddleware = (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
 
-    // Check if token exists and starts with 'Bearer '
-    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    // Check if token exists and starts with 'Bearer'
+    if (!authHeader || !authHeader.startsWith('Bearer')) {
       return res.status(401).json({
         success: false,
         message: 'No token provided or invalid format',
