@@ -114,9 +114,30 @@ const resetPasswordController = async (req, res) => {
   }
 };
 
+//DELETE USER/PROFILE
+const deleteUserController = async (req, res) => {
+    try {
+        const user = await userModel.findByIdAndDelete(req.user.id);
+        if (!user) {
+            return res.status(404).send({ success: false, message: "User not found" });
+        }
+        res.status(200).send({
+          success: true,
+          message: "Your account has been deleted successfully",
+        });
+    } catch (error) {
+        console.log("Delete User Error:", error);
+        res.status(500).send({
+          success: false,
+          message: "Error deleting user",
+          error
+        });
+    }
+};
 module.exports = {
   getUserController,
   updateUserController,
   updatePasswordController,
   resetPasswordController,
+  deleteUserController
 };
