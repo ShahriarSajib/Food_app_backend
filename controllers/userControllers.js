@@ -1,5 +1,7 @@
 const userModel = require("../models/userModel");
 const bcrypt = require("bcryptjs");
+const addToken = require("../utils/tokenBlacklist").addToken;
+const jwt = require('jsonwebtoken');
 
 // Get user info
 const getUserController = async (req, res) => {
@@ -134,10 +136,34 @@ const deleteUserController = async (req, res) => {
         });
     }
 };
+
+// Logout controller (blacklist token)
+const logoutUserController = async (req, res) => {
+  try {
+    const token = req.token; // set by authMiddleware
+
+    if (!token) {
+      return res.status(400).json({ success: false, message: 'No token provided' });
+    }
+
+    const decoded = jwt.decode(token);
+    const exp = decoded.exp;
+
+    // Add token to blacklist
+    addToken(token, exp);
+
+    res.status(200).send({ success: true, message: 'Logout successful. Token revoked.' });
+  } catch (error) {
+    console.log("Logout Error:", error);
+    res.status(500).send({ success: false, message: 'Error during logout', error });
+  }
+};
+
 module.exports = {
   getUserController,
   updateUserController,
   updatePasswordController,
   resetPasswordController,
-  deleteUserController
+  deleteUserController,
+  logoutUserController
 };

@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-
+const { isBlacklisted } = require('../utils/tokenBlacklist');
 const authMiddleware = (req, res, next) => {
   try {
     const authHeader = req.headers['authorization'];
@@ -14,6 +14,14 @@ const authMiddleware = (req, res, next) => {
 
     // Extract token
     const token = authHeader.split(' ')[1];
+    
+    // Store token in req for controllers that need it (like logout)
+    req.token = token;
+    
+    // Check blacklist
+    if (isBlacklisted(token)) {
+      return res.status(401).json({ success: false, message: 'Token is revoked. Please login again.' });
+    }
 
     // Verify token
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {

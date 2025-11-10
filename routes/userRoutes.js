@@ -4,7 +4,8 @@ const {
   updateUserController,
   resetPasswordController,
   updatePasswordController,
-  deleteUserController
+  deleteUserController,
+  logoutUserController
 } = require("../controllers/userControllers");
 const authMiddleware = require("../middlewares/authMiddleware");
 const router = express.Router();
@@ -15,5 +16,6 @@ router.put("/updateUser", authMiddleware, updateUserController);
 router.post("/resetPassword", authMiddleware, resetPasswordController);
 router.put("/updatePassword",authMiddleware, updatePasswordController);
 router.delete("/deleteUser/:id", authMiddleware, deleteUserController);
+router.post('/logout', authMiddleware, logoutUserController);
 
 module.exports = router;
