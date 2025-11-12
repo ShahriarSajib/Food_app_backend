@@ -54,7 +54,7 @@ const restaurantSchema = new mongoose.Schema({
     code: {
         type: String
     }
-});
+},{timestamp: true});
 
 //export
 module.exports = mongoose.model("Restaurant", restaurantSchema);
