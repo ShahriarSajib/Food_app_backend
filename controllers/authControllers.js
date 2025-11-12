@@ -82,10 +82,11 @@ const loginController = async (req, res) => {
         }
         //token
         const token = jwt.sign(
-            {id: user._id}, 
-            process.env.JWT_SECRET, 
-            {expiresIn: "7d"}
+            { id: user._id, userType: user.userType }, // <-- must include userType
+            process.env.JWT_SECRET,
+            { expiresIn: '7d' }
         );
+
         //hiding password in response
         user.password = undefined;
         
